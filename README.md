@@ -1,8 +1,8 @@
-Starter for NodeJS projects
+## Starter for NodeJS projects
 
 This is a blank [NodeJS](http://nodejs.org/) (using [express](http://expressjs.com/)) project that will connect to any prismic.io repository. It uses the prismic.io JavaScript developement kit, and provide a few helpers to integrate with [express](http://expressjs.com/).
 
-How to start?
+### How to start?
 
 Edit the `prismic-configuration.js` file to make the application point to the correct repository:
 
@@ -27,7 +27,7 @@ $ npm install
 $ node app
 ``` 
 
-Licence
+### Licence
 
 This software is licensed under the Apache 2 license, quoted below.
 
