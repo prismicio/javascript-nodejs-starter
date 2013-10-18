@@ -1,0 +1,19 @@
+<% layout('layout') -%>
+
+<h2 id="title">
+    <% if(docs.length > 0) { %>
+        <%= docs.length %> documents
+    <% } else { %>
+        No resulst found
+    <% } %>
+</h2>
+
+<ul id="list">
+    <% for(var i=0; i<docs.length; i++) { %>
+        <li>
+            <a href="<%= ctx.linkResolver(docs[i]) %>">
+                <%= docs[i].slug %>
+            </a>
+        </li>
+    <% } %>
+</ul>

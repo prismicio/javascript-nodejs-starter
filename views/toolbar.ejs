@@ -1,0 +1,25 @@
+<% if(ctx.oauth().hasPrivilegedAccess) { %>
+  <div id="toolbar">
+
+    <form id="selectRef">
+      <label for="releaseSelector">See this website: </label>
+      <select id="releaseSelector" name="ref" onchange="this.form.submit()">
+        <option value="" <% if(ctx.ref == ctx.api.data.master.ref) { %> selected="selected" <% } %> >As currently seen by guest visitors</option>
+        <optgroup label="Or preview the website in a future release:">
+        <% for(var i=0; i<ctx.api.data.refs.length; i++) { %>
+          <% if(!ctx.api.data.refs[i].isMaster) { %>
+            <option value="<%= ctx.api.data.refs[i].ref %>" <% if(ctx.ref == ctx.api.data.refs[i].ref) { %> selected="selected" <% } %>>As <%= ctx.api.data.refs[i].label %></option>
+          <% } %>
+        <% } %>
+        </optgroup>
+      </select>
+    </form>
+
+    <form action='/signout' method='POST'>
+      <input type="submit" value="Disconnect">
+    </form>
+
+    <hr>
+
+  </div>
+<% } %>

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Your prismic.io project</title>
+    <link rel="stylesheet" href="/stylesheets/style.css">
+  </head>
+  <body>
+  
+    <header>
+
+      <%- partial('toolbar') %>
+
+      <a href="/<%= ctx.maybeRef ? '?ref=' + ctx.maybeRef : '' %>">
+        <h1>Your prismic.io project</h1>
+      </a>
+    </header>
+
+    <%-body -%>
+
+    <footer>
+      <% if(!ctx.oauth().hasPrivilegedAccess) { %>
+          <hr><a href="/signin">Sign in to preview changes</a>
+      <% } %>
+    </footer>
+
+  </body>
+</html>
