@@ -9,6 +9,6 @@
     "express": "3.4.1",
     "ejs": "*",
     "ejs-locals": "~1.0.2",
-    "prismic.io": "*"
+    "prismic.io": "1.0.2"
   }
 }

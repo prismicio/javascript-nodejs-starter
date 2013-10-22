@@ -5,59 +5,10 @@ var Prismic = require('prismic.io').Prismic,
     url = require('url'),
     querystring = require('querystring');
 
-// -- A NodeJS compatible request handler
-
-var requestsCache = {},
-    nodeJsRequestHandler = function(requestUrl, callback) {
-
-  if(requestsCache[requestUrl]) {
-    callback(requestsCache[requestUrl]);
-  } else {
-
-    console.log('[prismic.io] ' + requestUrl)
-
-    var parsed = url.parse(requestUrl),
-        h = parsed.protocol == 'https:' ? https : http,
-        options = {
-          hostname: parsed.hostname,
-          path: parsed.path,
-          query: parsed.query,
-          headers: { 'Accept': 'application/json' }
-        };
-
-    h.get(options, function(response) {
-      if(response.statusCode && response.statusCode == 200) {
-        var jsonStr = '';
-
-        response.setEncoding('utf8');
-        response.on('data', function (chunk) {
-          jsonStr += chunk;
-        });
-
-        response.on('end', function () {
-          var cacheControl = response.headers['cache-control'],
-              maxAge = cacheControl && /max-age=(\d+)/.test(cacheControl) ? parseInt(/max-age=(\d+)/.exec(cacheControl)[1]) : undefined,
-              json = JSON.parse(jsonStr);
-          
-          if(maxAge) {
-            requestsCache[requestUrl] = json;
-          }
-          
-          callback(json);
-        });
-      } else {
-        throw new Error("Unexpected status code [" + response.statusCode + "]")
-      }
-    });
-
-  }
-
-};
-
 // -- Helpers
 
 exports.getApiHome = function(accessToken, callback) {
-  Prismic.Api(Configuration.apiEndpoint, callback, accessToken || Configuration.accessToken || undefined, nodeJsRequestHandler);
+  Prismic.Api(Configuration.apiEndpoint, callback, accessToken || Configuration.accessToken || undefined);
 };
 
 exports.getDocument = function(ctx, id, slug, onSuccess, onNewSlug, onNotFound) {
