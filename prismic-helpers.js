@@ -69,6 +69,24 @@ exports.getDocument = function(ctx, id, slug, onSuccess, onNewSlug, onNotFound) 
   });
 };
 
+exports.getDocuments = function(ctx, ids, callback) {
+  if(ids && ids.length) {
+    ctx.api.forms('everything').ref(ctx.ref).query('[[:d = any(document.id, [' + ids.map(function(id) { return '"' + id + '"';}).join(',') + '])]]').submit(function(results) {
+      callback(results);
+    });
+  } else {
+    callback([]);
+  }
+};
+
+exports.getBookmark = function(ctx, bookmark, callback) {
+  var id = ctx.api.bookmarks[bookmark];
+  if(id) {
+    exports.getDocument(ctx, id, undefined, callback);
+  } else {
+    callback();
+  }
+};
 
 // -- Route wrapper that provide a "prismic context" to the underlying function
 

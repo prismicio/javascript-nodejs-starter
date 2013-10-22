@@ -41,6 +41,8 @@ app.get('/signin', prismic.signin);
 app.get('/auth_callback', prismic.authCallback);
 app.post('/signout', prismic.signout);
 
-http.createServer(app).listen(app.get('port'), function(){
-  console.log('Express server listening on port ' + app.get('port'));
+var PORT = process.env.PORT || 3000;
+
+http.createServer(app).listen(PORT, function() {
+  console.log('Express server listening on port ' + PORT);
 });
