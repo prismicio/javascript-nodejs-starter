@@ -1,4 +1,4 @@
-var Prismic = require('./prismic.io-1.0.1.min').Prismic,
+var Prismic = require('prismic.io').Prismic,
     Configuration = require('./prismic-configuration').Configuration,
     http = require('http'),
     https = require('https'),
