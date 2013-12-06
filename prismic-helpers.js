@@ -14,9 +14,10 @@ exports.getApiHome = function(accessToken, callback) {
 exports.getDocument = function(ctx, id, slug, onSuccess, onNewSlug, onNotFound) {
   ctx.api.forms('everything').ref(ctx.ref).query('[[:d = at(document.id, "' + id + '")]]').submit(function(results) {
     var doc = results && results.length ? results[0] : undefined;
-    if(doc && doc.slug == slug) onSuccess(doc)
-    else if(doc && doc.slugs.indexOf('slug') > -1) onNewSlug(doc.slug)
-    else onNotFound();
+    if(doc && (!slug || doc.slug == slug)) onSuccess(doc)
+    else if(doc && doc.slugs.indexOf(slug) > -1 && onNewSlug) onNewSlug(doc.slug)
+    else if(onNotFound) onNotFound()
+    else onSuccess();
   });
 };
 
