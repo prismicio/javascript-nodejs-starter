@@ -23,7 +23,7 @@ exports.detail = prismic.route(function(req, res, ctx) {
       });
     },
     function(newSlug) {
-      res.redirect(302, '/documents/' + id + '/' + newSlug);
+      res.redirect(302, ctx.linkResolver(doc));
     },
     function(NOT_FOUND) {
       res.send(404, 'Sorry, we cannot find that!');
