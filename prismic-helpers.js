@@ -15,7 +15,7 @@ exports.getDocument = function(ctx, id, slug, onSuccess, onNewSlug, onNotFound) 
   ctx.api.forms('everything').ref(ctx.ref).query('[[:d = at(document.id, "' + id + '")]]').submit(function(results) {
     var doc = results && results.length ? results[0] : undefined;
     if(doc && (!slug || doc.slug == slug)) onSuccess(doc)
-    else if(doc && doc.slugs.indexOf(slug) > -1 && onNewSlug) onNewSlug(doc.slug)
+    else if(doc && doc.slugs.indexOf(slug) > -1 && onNewSlug) onNewSlug(doc)
     else if(onNotFound) onNotFound()
     else onSuccess();
   });
@@ -59,7 +59,7 @@ exports.route = function(callback) {
               }
             },
 
-            linkResolver: function(doc) {
+            linkResolver: function(ctx, doc) {
               return Configuration.linkResolver(ctx, doc);
             }
           };

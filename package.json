@@ -1,5 +1,5 @@
 {
-  "name": "application-name",
+  "name": "javascript-nodejs-starter",
   "version": "0.0.1",
   "private": true,
   "scripts": {
@@ -9,6 +9,7 @@
     "express": "3.4.1",
     "ejs": "*",
     "ejs-locals": "~1.0.2",
-    "prismic.io": "1.0.4"
-  }
+    "prismic.io": "1.0.6"
+  },
+  "repository" : { "type" : "git", "url" : "http://github.com/prismicio/javascript-nodejs-starter.git" }
 }

@@ -1,10 +1,25 @@
 ## Starter for NodeJS projects
 
-This is a blank [NodeJS](http://nodejs.org/) (using [express](http://expressjs.com/)) project that will connect to any prismic.io repository. It uses the prismic.io JavaScript developement kit, and provide a few helpers to integrate with [express](http://expressjs.com/).
+This is a blank [NodeJS](http://nodejs.org/) (using [express](http://expressjs.com/)) project that will connect to any prismic.io repository, and trivially list its documents. It uses the prismic.io JavaScript development kit, and provides a few helpers to integrate with [express](http://expressjs.com/).
 
-### How to start?
+### Getting started
 
-Edit the `prismic-configuration.js` file to make the application point to the correct repository:
+#### Launch the starter project
+
+*(Assuming you've [installed Node.js and npm](http://www.joyent.com/blog/installing-node-and-npm/))*
+
+Fork this repository, then clone your fork, and run this in your newly created directory:
+
+```sh
+npm install
+node app
+```
+
+Your Node.js starter project is now up and running! However, by default, it will list and display documents from our "[Les Bonnes Choses](http://lesbonneschoses.prismic.me)" example repository.
+
+#### Configure the starter project
+
+Edit the `prismic-configuration.js` file to get the application connected to the right repository:
 
 ```
 exports.Configuration = {
@@ -20,18 +35,13 @@ exports.Configuration = {
   ...
 ```
 
-To get the OAuth configuration, go to the _Applications_ panel in your repository settings, and create an OAuth application to allow interactive sign-in. Just create a new application, fill the application name and the callback URL (`localhost` URLs are always authorized, so at development time you can omit to fill the Callback URL field), and copy/paste the `clientId` & `clientSecret` tokens.
+To set up the OAuth configuration and interactive signin, go to the _Applications_ panel in your repository's settings, and create a new OAuth application. You simply have to fill in an application name and potentially the callback URL (`localhost` URLs are always authorized, so at development time you can omit to fill in the Callback URL field). After submitting, copy/paste the `clientId` & `clientSecret` tokens into the proper place in your configuration.
 
-Now, install the dependencies and run the server:
+You may have to restart your FRAMEWORK server.
 
-```
-$ npm install
-$ node app
-``` 
+#### Deploy your NodeJS application
 
-### Deploy your NodeJS application
-
-An easy way to deploy your NodeJS application is to use [Heroku](http://www.heroku.com). Just follow these few simple steps once you have successfully signed up and installed to Heroku toolchain:
+An easy way to deploy your NodeJS application is to use [Heroku](http://www.heroku.com). Just follow these few simple steps once you have successfully [signed up](https://id.heroku.com/signup/www-header) and [installed the Heroku toolbelt](https://toolbelt.heroku.com/):
 
 Create a `Procfile` file at your application root, to declare the server command:
 
@@ -62,6 +72,18 @@ You can now browse your application online:
 ```
 $ heroku open
 ```
+
+#### Get started with prismic.io
+
+You can find out [how to get started with prismic.io](https://developers.prismic.io/documentation/UjBaQsuvzdIHvE4D/getting-started) on our [prismic.io developer's portal](https://developers.prismic.io/).
+
+#### Understand the JavaScript development kit
+
+You'll find more information about how to use the development kit included in this starter project, by reading [its README file](https://github.com/prismicio/javascript-kit/blob/master/README.md).
+
+### Contribute to the starter project
+
+Contribution is open to all developer levels, read our "[Contribute to the official kits](https://developers.prismic.io/documentation/UszOeAEAANUlwFpp/contribute-to-the-official-kits)" documentation to learn more.
 
 ### Licence
 

@@ -11,6 +11,7 @@ exports.Configuration = {
 
   // -- Links resolution rules
   linkResolver: function(ctx, doc) {
+    if (doc.isBroken) return false;
     return '/documents/' + doc.id + '/' + doc.slug + (ctx.maybeRef ? '?ref=' + ctx.maybeRef : '');
   }
 
