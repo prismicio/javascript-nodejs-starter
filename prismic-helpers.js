@@ -134,3 +134,11 @@ exports.signout = function(req, res) {
   res.redirect(301, '/');
 };
 
+// - route to deal with temporary error issue
+exports.newcontent = function(req, res) {
+  var url = req.param('url') ? req.param('url') : '/';
+  res.render('newcontent', {
+    url: url
+  });
+}
+

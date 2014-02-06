@@ -38,6 +38,9 @@ app.get('/signin', prismic.signin);
 app.get('/auth_callback', prismic.authCallback);
 app.post('/signout', prismic.signout);
 
+// - route to deal with temporary error issue
+app.get('/newcontent', prismic.newcontent);
+
 var PORT = process.env.PORT || 3000;
 
 http.createServer(app).listen(PORT, function() {
