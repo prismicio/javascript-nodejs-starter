@@ -28,7 +28,7 @@ exports.getDocuments = function(ctx, ids, callback) {
       callback(err, results);
     });
   } else {
-    callback([]);
+    callback(null, []);
   }
 };
 
