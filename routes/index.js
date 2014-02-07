@@ -3,7 +3,8 @@ var prismic = require('../prismic-helpers');
 // -- Display all documents
 
 exports.index = prismic.route(function(req, res, ctx) {
-  ctx.api.form('everything').ref(ctx.ref).submit(function(docs) {
+  ctx.api.form('everything').ref(ctx.ref).submit(function(err, docs) {
+    if (err) { prismic.onPrismicError(err, req, res); return; }
     res.render('index', {
       docs: docs
     });
@@ -17,7 +18,8 @@ exports.detail = prismic.route(function(req, res, ctx) {
       slug = req.params['slug'];
 
   prismic.getDocument(ctx, id, slug, 
-    function(doc) {
+    function(err, doc) {
+      if (err) { prismic.onPrismicError(err, req, res); return; }
       res.render('detail', {
         doc: doc
       });
@@ -37,7 +39,8 @@ exports.search = prismic.route(function(req, res, ctx) {
   var q = req.query['q'];
 
   if(q) {
-    ctx.api.form('everything').ref(ctx.ref).query('[[:d = fulltext(document, "' + q + '")]]').submit(function(docs) {
+    ctx.api.form('everything').ref(ctx.ref).query('[[:d = fulltext(document, "' + q + '")]]').submit(function(err, docs) {
+      if (err) { prismic.onPrismicError(err, req, res); return; }
       res.render('search', {
         docs: docs
       });

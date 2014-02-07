@@ -12,9 +12,10 @@ exports.getApiHome = function(accessToken, callback) {
 };
 
 exports.getDocument = function(ctx, id, slug, onSuccess, onNewSlug, onNotFound) {
-  ctx.api.forms('everything').ref(ctx.ref).query('[[:d = at(document.id, "' + id + '")]]').submit(function(results) {
+  ctx.api.forms('everything').ref(ctx.ref).query('[[:d = at(document.id, "' + id + '")]]').submit(function(err, results) {
     var doc = results && results.length ? results[0] : undefined;
-    if(doc && (!slug || doc.slug == slug)) onSuccess(doc)
+    if (err) onSuccess(err);
+    else if(doc && (!slug || doc.slug == slug)) onSuccess(null, doc)
     else if(doc && doc.slugs.indexOf(slug) > -1 && onNewSlug) onNewSlug(doc)
     else if(onNotFound) onNotFound()
     else onSuccess();
@@ -23,8 +24,8 @@ exports.getDocument = function(ctx, id, slug, onSuccess, onNewSlug, onNotFound) 
 
 exports.getDocuments = function(ctx, ids, callback) {
   if(ids && ids.length) {
-    ctx.api.forms('everything').ref(ctx.ref).query('[[:d = any(document.id, [' + ids.map(function(id) { return '"' + id + '"';}).join(',') + '])]]').submit(function(results) {
-      callback(results);
+    ctx.api.forms('everything').ref(ctx.ref).query('[[:d = any(document.id, [' + ids.map(function(id) { return '"' + id + '"';}).join(',') + '])]]').submit(function(err, results) {
+      callback(err, results);
     });
   } else {
     callback([]);
@@ -40,11 +41,15 @@ exports.getBookmark = function(ctx, bookmark, callback) {
   }
 };
 
+// -- Exposing as a helper what to do in the event of an error (please edit prismic-configuration.js to change this)
+exports.onPrismicError = Configuration.onPrismicError;
+
 // -- Route wrapper that provide a "prismic context" to the underlying function
 
 exports.route = function(callback) {
   return function(req, res) {
-    exports.getApiHome(req.session['ACCESS_TOKEN'], function(Api) {
+    exports.getApiHome(req.session['ACCESS_TOKEN'], function(err, Api) {
+      if (err) { exports.onPrismicError(err, req, res); return; }
       var ref = req.query['ref'] || Api.master(),
           ctx = {
             api: Api,
@@ -76,7 +81,8 @@ var redirectUri = function(req) {
 };
 
 exports.signin = function(req, res) {
-  exports.getApiHome(undefined, function(Api) {
+  exports.getApiHome(undefined, function(err, Api) {
+    if (err) { exports.onPrismicError(err, req, res); return; }
     var endpointSpec = url.parse(Api.data.oauthInitiate);
 
     endpointSpec.query = endpointSpec.query || {};
@@ -89,7 +95,8 @@ exports.signin = function(req, res) {
 };
 
 exports.authCallback = function(req, res) {
-  exports.getApiHome(undefined, function(Api) {
+  exports.getApiHome(undefined, function(err, Api) {
+    if (err) { exports.onPrismicError(err, req, res); return; }
     var endpointSpec = url.parse(Api.data.oauthToken),
         h = endpointSpec.protocol == 'https:' ? https : http,
         postData = querystring.stringify({
