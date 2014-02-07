@@ -25,7 +25,7 @@ exports.detail = prismic.route(function(req, res, ctx) {
       });
     },
     function(doc) {
-      res.redirect(302, ctx.linkResolver(ctx, doc));
+      res.redirect(301, ctx.linkResolver(ctx, doc));
     },
     function(NOT_FOUND) {
       res.send(404, 'Sorry, we cannot find that!');
