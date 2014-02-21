@@ -47,7 +47,7 @@ exports.search = prismic.route(function(req, res, ctx) {
     });
   } else {
     res.render('search', {
-      docs: []
+      docs: null
     });
   }
 
