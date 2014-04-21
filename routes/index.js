@@ -3,7 +3,7 @@ var prismic = require('../prismic-helpers');
 // -- Display all documents
 
 exports.index = prismic.route(function(req, res, ctx) {
-  ctx.api.form('everything').ref(ctx.ref).submit(function(err, docs) {
+  ctx.api.form('everything').set("page", req.param('page') || "1").ref(ctx.ref).submit(function(err, docs) {
     if (err) { prismic.onPrismicError(err, req, res); return; }
     res.render('index', {
       docs: docs

@@ -24,3 +24,29 @@
         </li>
     <% } %>
 </ul>
+
+<hr>
+
+<% if (docs.total_pages > 1) { %>
+    <ul>
+        <% if (docs.page > 1) { %>
+            <li>
+                <a href="/?page=<%= docs.page - 1 %>">previous page</a>
+            </li>
+        <% } %>
+        <% for (var i = 1; i<=docs.total_pages; i++) { %>
+            <li>
+                <% if (docs.page == i) { %>
+                    <span><%= i %></span>
+                <% } else { %>
+                    <a href="/?page=<%= i %>"><%= i %></a>
+                <% } %>
+            </li>
+        <% } %>
+        <% if (docs.page != docs.total_pages) { %>
+            <li>
+                <a href="/?page=<%= docs.total_pages %>">next page</a>
+            </li>
+        <% } %>
+    </ul>
+<% } %>
