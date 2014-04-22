@@ -8,8 +8,8 @@
 <hr>
 
 <h2 id="title">
-    <% if(docs.results.length > 0) { %>
-        <%= docs.results.length %> documents
+    <% if(docs.total_results_size > 0) { %>
+        <%= docs.total_results_size %> documents
     <% } else { %>
         No documents found
     <% } %>
@@ -24,3 +24,29 @@
         </li>
     <% } %>
 </ul>
+
+<hr>
+
+<% if (docs.total_pages > 1) { %>
+    <ul>
+        <% if (docs.page > 1) { %>
+            <li>
+                <a href="/?page=<%= docs.page - 1 %>">previous page</a>
+            </li>
+        <% } %>
+        <% for (var i = 1; i<=docs.total_pages; i++) { %>
+            <li>
+                <% if (docs.page == i) { %>
+                    <span><%= i %></span>
+                <% } else { %>
+                    <a href="/?page=<%= i %>"><%= i %></a>
+                <% } %>
+            </li>
+        <% } %>
+        <% if (docs.page != docs.total_pages) { %>
+            <li>
+                <a href="/?page=<%= docs.total_pages %>">next page</a>
+            </li>
+        <% } %>
+    </ul>
+<% } %>

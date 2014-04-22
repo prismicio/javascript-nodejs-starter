@@ -1,8 +1,8 @@
 <% layout('layout') -%>
 
 <h2 id="title">
-    <% if(docs && docs.results.length > 0) { %>
-        <%= docs.results.length %> documents
+    <% if(docs && docs.total_results_size > 0) { %>
+        <%= docs.total_results_size %> documents
     <% } else { %>
         No results found
     <% } %>
@@ -15,6 +15,31 @@
                 <a href="<%= ctx.linkResolver(ctx, docs.results[i]) %>">
                     <%= docs.results[i].slug %>
                 </a>
+            </li>
+        <% } %>
+    </ul>
+<% } %>
+
+<% if (docs.total_pages > 1) { %>
+    <% pageURL = url.replace(/&?page=\d+/, '') + (/[?]/.test(url) ? '&' : '?') + "page=" %>
+    <ul>
+        <% if (docs.page > 1) { %>
+            <li>
+                <a href="<%= pageURL %><%= docs.page - 1 %>">previous page</a>
+            </li>
+        <% } %>
+        <% for (var i = 1; i<=docs.total_pages; i++) { %>
+            <li>
+                <% if (docs.page == i) { %>
+                    <span><%= i %></span>
+                <% } else { %>
+                    <a href="<%= pageURL %><%= i %>"><%= i %></a>
+                <% } %>
+            </li>
+        <% } %>
+        <% if (docs.page != docs.total_pages) { %>
+            <li>
+                <a href="<%= pageURL %><%= docs.total_pages %>">next page</a>
             </li>
         <% } %>
     </ul>
