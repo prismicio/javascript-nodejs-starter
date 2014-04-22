@@ -1,8 +1,8 @@
 <% layout('layout') -%>
 
 <h2 id="title">
-    <% if(docs && docs.results.length > 0) { %>
-        <%= docs.results.length %> documents
+    <% if(docs && docs.total_results_size > 0) { %>
+        <%= docs.total_results_size %> documents
     <% } else { %>
         No results found
     <% } %>
