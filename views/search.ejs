@@ -19,3 +19,28 @@
         <% } %>
     </ul>
 <% } %>
+
+<% if (docs.total_pages > 1) { %>
+    <% pageURL = url.replace(/&?page=\d+/, '') + (/[?]/.test(url) ? '&' : '?') + "page=" %>
+    <ul>
+        <% if (docs.page > 1) { %>
+            <li>
+                <a href="<%= pageURL %><%= docs.page - 1 %>">previous page</a>
+            </li>
+        <% } %>
+        <% for (var i = 1; i<=docs.total_pages; i++) { %>
+            <li>
+                <% if (docs.page == i) { %>
+                    <span><%= i %></span>
+                <% } else { %>
+                    <a href="<%= pageURL %><%= i %>"><%= i %></a>
+                <% } %>
+            </li>
+        <% } %>
+        <% if (docs.page != docs.total_pages) { %>
+            <li>
+                <a href="<%= pageURL %><%= docs.total_pages %>">next page</a>
+            </li>
+        <% } %>
+    </ul>
+<% } %>

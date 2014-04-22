@@ -39,15 +39,18 @@ exports.search = prismic.route(function(req, res, ctx) {
   var q = req.query['q'];
 
   if(q) {
-    ctx.api.form('everything').ref(ctx.ref).query('[[:d = fulltext(document, "' + q + '")]]').submit(function(err, docs) {
+    ctx.api.form('everything').set("page", req.param('page') || "1").ref(ctx.ref)
+           .query('[[:d = fulltext(document, "' + q + '")]]').submit(function(err, docs) {
       if (err) { prismic.onPrismicError(err, req, res); return; }
       res.render('search', {
-        docs: docs
+        docs: docs,
+        url: req.url
       });
     });
   } else {
     res.render('search', {
-      docs: null
+      docs: null,
+      url: req.url
     });
   }
 
