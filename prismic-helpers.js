@@ -8,7 +8,7 @@ var Prismic = require('prismic.io').Prismic,
 // -- Helpers
 
 exports.getApiHome = function(accessToken, callback) {
-  Prismic.Api(Configuration.apiEndpoint, callback, accessToken || Configuration.accessToken || undefined);
+  Prismic.Api(Configuration.apiEndpoint, callback, accessToken);
 };
 
 exports.getDocument = function(ctx, id, slug, onSuccess, onNewSlug, onNotFound) {
@@ -49,7 +49,8 @@ exports.onPrismicError = Configuration.onPrismicError;
 
 exports.route = function(callback) {
   return function(req, res) {
-    exports.getApiHome(req.session['ACCESS_TOKEN'], function(err, Api) {
+    var accessToken = (req.session && req.session['ACCESS_TOKEN']) || Configuration.accessToken || undefined
+    exports.getApiHome(accessToken, function(err, Api) {
       if (err) { exports.onPrismicError(err, req, res); return; }
       var ref = req.query['ref'] || Api.master(),
           ctx = {
@@ -58,7 +59,7 @@ exports.route = function(callback) {
             maybeRef: ref == Api.master() ? undefined : ref,
 
             oauth: function() {
-              var token = req.session['ACCESS_TOKEN'];
+              var token = accessToken;
               return {
                 accessToken: token,
                 hasPrivilegedAccess: !!token
@@ -141,4 +142,3 @@ exports.signout = function(req, res) {
   delete req.session['ACCESS_TOKEN'];
   res.redirect(301, '/');
 };
-
