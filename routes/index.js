@@ -63,8 +63,7 @@ exports.preview = prismic.route(function(req, res, ctx) {
 
   if (token) {
     ctx.api.previewSession(token, ctx.linkResolver, '/', function(err, url) {
-      console.warn("Preview cookie name = " + prismic.previewCookie);
-      res.cookie(prismic.previewCookie, token, { maxAge: 30 * 60 * 1000, httpOnly: false });
+      res.cookie(prismic.previewCookie, token, { maxAge: 30 * 60 * 1000, path: '/', httpOnly: false });
       res.redirect(301, url);
     });
   } else {

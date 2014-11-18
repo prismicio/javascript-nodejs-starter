@@ -18,7 +18,7 @@
 <ul id="list">
     <% for(var i=0; i<docs.results.length; i++) { %>
         <li>
-            <a href="<%= ctx.linkResolver(ctx, docs.results[i]) %>">
+            <a href="<%= ctx.linkResolver(docs.results[i]) %>">
                 <%= docs.results[i].slug %>
             </a>
         </li>

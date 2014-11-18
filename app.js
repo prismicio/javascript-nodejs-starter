@@ -39,11 +39,6 @@ app.route('/documents/:id/:slug').get(routes.detail);
 app.route('/search').get(routes.search);
 app.route('/preview').get(routes.preview);
 
-// OAuth - Routes
-app.route('/signin').get(prismic.signin);
-app.route('/auth_callback').get(prismic.authCallback);
-app.route('/signout').post(prismic.signout);
-
 var PORT = app.get('port');
 
 app.listen(PORT, function() {
