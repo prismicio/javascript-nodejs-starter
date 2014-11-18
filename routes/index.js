@@ -25,7 +25,7 @@ exports.detail = prismic.route(function(req, res, ctx) {
       });
     },
     function(doc) {
-      res.redirect(301, ctx.linkResolver(ctx, doc));
+      res.redirect(301, ctx.linkResolver(doc));
     },
     function(NOT_FOUND) {
       res.send(404, 'Sorry, we cannot find that!');
@@ -54,4 +54,20 @@ exports.search = prismic.route(function(req, res, ctx) {
     });
   }
 
+});
+
+// -- Preview documents from the Writing Room
+
+exports.preview = prismic.route(function(req, res, ctx) {
+  var token = req.query['token'];
+
+  if (token) {
+    ctx.api.previewSession(token, ctx.linkResolver, '/', function(err, url) {
+      console.warn("Preview cookie name = " + prismic.previewCookie);
+      res.cookie(prismic.previewCookie, token, { maxAge: 30 * 60 * 1000, httpOnly: false });
+      res.redirect(301, url);
+    });
+  } else {
+    res.send(400, "Missing token from querystring");
+  }
 });

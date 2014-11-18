@@ -5,6 +5,8 @@ var Prismic = require('prismic.io').Prismic,
     url = require('url'),
     querystring = require('querystring');
 
+exports.previewCookie = Prismic.previewCookie;
+
 // -- Helpers
 
 exports.getApiHome = function(accessToken, callback) {

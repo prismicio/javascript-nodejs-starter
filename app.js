@@ -37,6 +37,7 @@ app.use(errorHandler());
 app.route('/').get(routes.index);
 app.route('/documents/:id/:slug').get(routes.detail);
 app.route('/search').get(routes.search);
+app.route('/preview').get(routes.preview);
 
 // OAuth - Routes
 app.route('/signin').get(prismic.signin);

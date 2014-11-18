@@ -18,7 +18,7 @@
     "jade": "~1.4.2",
     "ejs": "*",
     "ejs-locals": "~1.0.2",
-    "prismic.io": "1.0.20"
+    "prismic.io": "1.0.26"
   },
   "repository" : { "type" : "git", "url" : "http://github.com/prismicio/javascript-nodejs-starter.git" }
 }
