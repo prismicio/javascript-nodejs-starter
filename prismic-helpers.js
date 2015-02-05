@@ -51,23 +51,15 @@ exports.onPrismicError = Configuration.onPrismicError;
 
 exports.route = function(callback) {
   return function(req, res) {
-    var accessToken = (req.session && req.session['ACCESS_TOKEN']) || Configuration.accessToken || undefined
+    var accessToken = (req.session && req.session['ACCESS_TOKEN']) || Configuration.accessToken;
     exports.getApiHome(accessToken, function(err, Api) {
-      if (err) { exports.onPrismicError(err, req, res); return; }
-      var ref = req.query['ref'] || Api.master(),
-          ctx = {
+      if (err) {
+          exports.onPrismicError(err, req, res);
+          return;
+      }
+      var ctx = {
             api: Api,
-            ref: ref,
-            maybeRef: ref == Api.master() ? undefined : ref,
-
-            oauth: function() {
-              var token = accessToken;
-              return {
-                accessToken: token,
-                hasPrivilegedAccess: !!token
-              }
-            },
-
+            ref: req.cookies[Prismic.experimentCookie] || req.cookies[Prismic.previewCookie] || Api.master(),
             linkResolver: function(doc) {
               return Configuration.linkResolver(doc);
             }
