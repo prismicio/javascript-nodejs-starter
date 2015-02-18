@@ -13,16 +13,14 @@ var express = require('express'),
     routes = require('./routes'),
     http = require('http'),
     path = require('path'),
-    engine = require('ejs-locals'),
     prismic = require('./prismic-helpers');
 
 var app = express();
 
 // all environments
-app.engine('ejs', engine);
 app.set('port', process.env.PORT || 3000);
 app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'ejs');
+app.set('view engine', 'jade');
 app.use(favicon());
 app.use(logger('dev'));
 app.use(bodyParser());

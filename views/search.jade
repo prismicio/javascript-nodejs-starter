@@ -1,0 +1,23 @@
+extends ./layout.jade
+
+block body
+
+    h2#title
+        if docs.total_results_size > 0
+            | #{docs.total_results_size} documents
+        else
+            | No documents found
+
+    if docs
+        ul#list
+            each doc in docs.results
+                li
+                    a(href=ctx.linkResolver(doc)) #{doc.slug}
+
+
+    if docs.prev_page
+        a(href='/search?q=#{q}&page=#{docs.page - 1}') « Previous Page
+
+    if docs.next_page
+        a(href='/search?q=#{q}&page=#{docs.page + 1}') Next Page »
+

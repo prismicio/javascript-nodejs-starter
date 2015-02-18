@@ -43,12 +43,14 @@ exports.search = prismic.route(function(req, res, ctx) {
            .query('[[:d = fulltext(document, "' + q + '")]]').submit(function(err, docs) {
       if (err) { prismic.onPrismicError(err, req, res); return; }
       res.render('search', {
+        q: q,
         docs: docs,
         url: req.url
       });
     });
   } else {
     res.render('search', {
+      q: q,
       docs: null,
       url: req.url
     });

@@ -1,0 +1,29 @@
+extends ./layout.jade
+
+block body
+    form(action="/search")
+        input(type="text", name="q", value="")
+        input(type="submit", value="Search")
+
+    hr
+
+    h2#title
+        if docs.total_results_size > 0
+            | #{docs.total_results_size} documents
+        else
+            | No documents found
+
+    ul#list
+        each doc in docs.results
+            li
+                a(href=ctx.linkResolver(doc)) #{doc.slug}
+
+    hr
+
+
+    if docs.prev_page
+        a(href='/?page=#{docs.page - 1}') « Previous Page
+
+    if docs.next_page
+        a(href='/?page=#{docs.page + 1}') Next Page »
+
