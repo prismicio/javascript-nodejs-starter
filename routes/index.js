@@ -17,7 +17,7 @@ exports.detail = prismic.route(function(req, res, ctx) {
   var id = req.params['id'],
       slug = req.params['slug'];
 
-  prismic.getDocument(ctx, id, slug, 
+  prismic.getDocument(ctx, id, slug,
     function(err, doc) {
       if (err) { prismic.onPrismicError(err, req, res); return; }
       res.render('detail', {
