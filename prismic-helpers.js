@@ -18,9 +18,9 @@ exports.getDocument = function(ctx, id, slug, onSuccess, onNewSlug, onNotFound) 
     var results = documents.results;
     var doc = results && results.length ? results[0] : undefined;
     if (err) onSuccess(err);
-    else if(doc && (!slug || doc.slug == slug)) onSuccess(null, doc)
-    else if(doc && doc.slugs.indexOf(slug) > -1 && onNewSlug) onNewSlug(doc)
-    else if(onNotFound) onNotFound()
+    else if(doc && (!slug || doc.slug == slug)) onSuccess(null, doc);
+    else if(doc && doc.slugs.indexOf(slug) > -1 && onNewSlug) onNewSlug(doc);
+    else if(onNotFound) onNotFound();
     else onSuccess();
   });
 };
@@ -58,16 +58,15 @@ exports.route = function(callback) {
           return;
       }
       var ctx = {
-            api: Api,
-            ref: req.cookies[Prismic.experimentCookie] || req.cookies[Prismic.previewCookie] || Api.master(),
-            linkResolver: function(doc) {
-              return Configuration.linkResolver(doc);
-            }
-          };
+        endpoint: Configuration.apiEndpoint,
+        api: Api,
+        ref: req.cookies[Prismic.experimentCookie] || req.cookies[Prismic.previewCookie] || Api.master(),
+        linkResolver: function(doc) {
+          return Configuration.linkResolver(doc);
+        }
+      };
       res.locals.ctx = ctx;
       callback(req, res, ctx);
     });
   };
 };
-
-

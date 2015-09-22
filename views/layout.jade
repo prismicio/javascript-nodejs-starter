@@ -4,6 +4,9 @@ head
     title Your prismic.io project
     link(rel="stylesheet", href="/stylesheets/style.css")
     // Required for Previews and Experiments
+    script(src="//code.jquery.com/jquery-1.11.3.min.js")
+    script
+      = "window.prismic = { endpoint: '" + ctx.endpoint + "' };"
     script(src="//static.cdn.prismic.io/prismic.min.js")
 
 body
@@ -13,5 +16,3 @@ body
             h1 Your prismic.io project
 
     block body
-
-
