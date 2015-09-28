@@ -2,5 +2,4 @@ extends ./layout.jade
 
 block body
 
-    article(data-wio-id=doc.id)
-        !{doc.asHtml(ctx.linkResolver)}
+    article(data-wio-id=doc.id) !{doc.asHtml(ctx.linkResolver)}
