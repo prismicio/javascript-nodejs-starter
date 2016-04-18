@@ -5,7 +5,6 @@
 var express = require('express'),
     favicon = require('static-favicon'),
     logger = require('morgan'),
-    cookieParser = require('cookie-parser'),
     bodyParser = require('body-parser'),
     methodOverride = require('method-override'),
     session = require('express-session'),
@@ -25,7 +24,6 @@ app.use(favicon());
 app.use(logger('dev'));
 app.use(bodyParser());
 app.use(methodOverride());
-app.use(cookieParser('1234'));
 app.use(session({secret: '1234', saveUninitialized: true, resave: true}));
 app.use(express.static(path.join(__dirname, 'public')));
 
